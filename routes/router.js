@@ -25,7 +25,7 @@ router.post(
   [check("username").isEmpty(), check("password").isEmpty()],
   async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { username, password } = req.body;
 
       //Check for empty credentials and send back response message
       const validationResults = validationResult(req);
@@ -37,7 +37,7 @@ router.post(
       }
 
       //Query the database for user and send back response message
-      const user = await User.find({ email });
+      const user = await User.findOne({ username });
       if (!user) {
         return res
           .status(404)

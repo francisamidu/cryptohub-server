@@ -2,9 +2,8 @@ const JWT = require("jsonwebtoken");
 
 const signJwt = async (payload) => {
   try {
-    console.log(process.env.AUTH_SECRET);
     const token = await JWT.sign(payload, process.env.AUTH_SECRET, {
-      expiresIn: "1 day",
+      expiresIn: Math.floor(Date.now() / 1000) + 60 * 60,
     });
     return token;
   } catch (error) {

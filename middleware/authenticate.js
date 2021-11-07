@@ -1,6 +1,6 @@
 const verifyJwt = require("../utils/verifyJwt");
 
-const authenticate = (req, res, next) => {
+const authenticate = async (req, res, next) => {
   const token = req.header("x-auth-token");
   if (!token) {
     return res
@@ -8,7 +8,7 @@ const authenticate = (req, res, next) => {
       .json({ success: false, message: "Unauthorized access" });
   }
   try {
-    const user = verifyJwt(token);
+    const user = await verifyJwt(token);
     req.user = user;
     next();
   } catch (error) {
