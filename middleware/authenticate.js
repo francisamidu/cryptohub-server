@@ -1,29 +1,22 @@
-const jwt = require("jsonwebtoken");
-module.exports = (req, res, next) => {
-  const authHeader = req.get("Authorization");
-  if (!authHeader) {
-    req.isAuthenticated = false;
-    return next();
+const verifyJwt = require("../utils/verifyJwt");
+
+const authenticate = (req, res, next) => {
+  const token = req.header("x-auth-token");
+  if (!token) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Unauthorized access" });
   }
-
-  const token = authHeader.split(" ")[1];
-
-  let decodedToken;
   try {
-    decodedToken = jwt.verify(
-      token,
-      "talkingaboutafacenumbingoffabagofblowandsomeweirdspeech"
-    );
-  } catch (err) {
-    req.isAuthenticated = false;
-    return next();
+    const user = verifyJwt(token);
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong during authentication",
+    });
   }
-
-  if (!decodedToken) {
-    req.isAuthenticated = false;
-    return next();
-  }
-  req.userId = decodedToken.userId;
-  req.isAuthenticated = true;
-  return next();
 };
+
+module.exports = authenticate;
