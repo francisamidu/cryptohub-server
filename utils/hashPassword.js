@@ -4,7 +4,7 @@ const hashPassword = async (password) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     return hashedPassword;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 

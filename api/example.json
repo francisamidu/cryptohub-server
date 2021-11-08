@@ -1,0 +1,66 @@
+// url: 'https://bing-news-search1.p.rapidapi.com/news',
+//   params: {safeSearch: 'Off', textFormat: 'Raw'},
+//   headers: {
+//     'x-bingapis-sdk': 'true',
+//     'x-rapidapi-host': 'bing-news-search1.p.rapidapi.com',
+//     'x-rapidapi-key': 'ae4dbf78a3mshf9e0f7437d18993p1989d8jsn775492093c80'
+//   }
+{
+    "data": {
+        "stats": "",
+        "base": "",
+        "coins": [
+            {
+                "id": 1,
+                "uuid": "Qwsogvtv82FCd",
+                "slug": "bitcoin-btc",
+                "symbol": "BTC",
+                "name": "Bitcoin",
+                "description": "",
+                "color": "#f7931A",
+                "iconType": "vector",
+                "iconUrl": "https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg",
+                "websiteUrl": "https://bitcoin.org",
+                "socials": "",
+                "links": [],
+                "confirmedSupply": true,
+                "numberOfMarkets": 21756,
+                "numberOfExchanges": 346,
+                "type": "coin",
+                "volume": 29633771266,
+                "marketCap": 1168031993923,
+                "price": "61911.9089713783",
+                "circulatingSupply": 18866031,
+                "totalSupply": 18866031,
+                "approvedSupply": true,
+                "firstSeen": 1330214400000,
+                "listedAt": 1330214400,
+                "change": 1.15,
+                "rank": 1,
+                "webSearchUrl": "https://www.bing.com/news/search?q=top+stories&form=TNSA02",
+                "value": [
+                    "name": "Querdenker-Demo gegen Corona-Maßnahmen: Leipzig: Polizei nimmt 24 Personen aus rechter Szene in Gewahrsam",
+                    "url": "",
+                    "image": {
+                        "thumbnail": {
+                            "_type": "ImageObject"
+"contentUrl": "https://www.bing.com/th?id=ORMS.e02bb283658849448867433c47791b11&pid=Wdp"
+"width": 1000
+"height": 562
+                        }
+"isLicensed": true
+                    }
+"description": "Am Samstag kam es in Leipzig zu Protesten gegen die Corona-Maßnahmen. Die Polizei war mit einem Großaufgebot und Wasserwerfern im Einsatz.Leipzig: Polizei nimmt 24 Personen aus rechter Szene in"
+"provider": [
+                        {
+                            "_type": "Organization"
+"name": "SZ.de"
+"image": {
+                                "_type": "ImageObject"
+"thumbnail": {
+                                    "contentUrl": "https://www.bing.com/th?id=ODF.ljVx36peutQJEGpk199slg&pid=news"
+                                }
+                            }
+                        }
+                    ],
+                    "datePublished": "2021-11-06T22:55:00.0000000Z"

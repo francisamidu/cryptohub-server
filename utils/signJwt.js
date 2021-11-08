@@ -7,7 +7,7 @@ const signJwt = async (payload) => {
     });
     return token;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
