@@ -5,6 +5,9 @@ const PORT = process.env.PORT || 5000;
 const mongoose = require("mongoose");
 const authenticate = require("./middleware/authenticate");
 
+//load env
+require("dotenv").config();
+
 //API routes
 app.use("/auth", require("./routes/auth"));
 app.use("/api", [authenticate, require("./routes/api")]);
@@ -22,9 +25,6 @@ mongoose
     });
   })
   .catch((error) => console.log(error));
-
-//load env
-require("dotenv").config();
 
 //Allow json
 app.use(express.json());
