@@ -7,9 +7,7 @@ const User = require("../../db/models/User");
 const Token = require("../../db/models/Token");
 
 //Auth Utilities
-const comparePassword = require("../../utils/comparePassword");
 const hashPassword = require("../../utils/hashPassword");
-const signJwt = require("../../utils/signJwt");
 
 //Signup/Register endpoint
 router.post(
@@ -43,7 +41,7 @@ router.post(
         success: false,
       }));
       if (validationResults.length) {
-        return res.status(403).json(validationResults);
+        return res.status(401).json(validationResults);
       }
 
       //has user password
@@ -57,7 +55,14 @@ router.post(
       });
       await user.save();
 
-      return res.status(201).json({ success: true, user: user._doc });
+      return res.status(201).json({
+        success: true,
+        user: {
+          username: user._doc.username,
+          email: user._doc.email,
+          createdAt: user._doc.created_at,
+        },
+      });
     } catch (error) {
       console.log(error);
       return res

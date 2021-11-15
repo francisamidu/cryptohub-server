@@ -8,7 +8,6 @@ const Token = require("../../db/models/Token");
 
 //Auth Utilities
 const comparePassword = require("../../utils/comparePassword");
-const hashPassword = require("../../utils/hashPassword");
 const signJwt = require("../../utils/signJwt");
 
 //Login/Signin endpoint
@@ -48,6 +47,7 @@ router.post(
       const token = await signJwt({
         _id: user._id,
         email: user.email,
+        username: user.username,
       });
 
       //Save token to the database
@@ -55,7 +55,15 @@ router.post(
         token,
       });
       await savedToken.save();
-      return res.json({ message: "Login successful", success: true, token });
+      return res.json({
+        message: "Login successful",
+        success: true,
+        token,
+        user: {
+          username: user.username,
+          email: user.email,
+        },
+      });
     } catch (error) {
       console.log(error);
       return res.status(500).json({

@@ -8,6 +8,14 @@ const authenticate = require("./middleware/authenticate");
 //load env
 require("dotenv").config();
 
+//setup cors
+app.use(require("cors")());
+
+//Allow json
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: false }));
+
 //API routes
 app.use("/auth", require("./routes/auth"));
 app.use("/api", [authenticate, require("./routes/api")]);
@@ -25,8 +33,3 @@ mongoose
     });
   })
   .catch((error) => console.log(error));
-
-//Allow json
-app.use(express.json());
-
-app.use(express.urlencoded({ extended: true }));
