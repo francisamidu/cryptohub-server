@@ -22,7 +22,7 @@ router.post(
       const validationResults = validationResult(req);
       if (validationResults.length) {
         return res.status(403).json({
-          message: "Please provide valid login credential",
+          message: "Please provide valid login credentials",
           success: false,
         });
       }
@@ -44,21 +44,31 @@ router.post(
       }
 
       //Sign JWT
-      const token = await signJwt({
+      const accessToken = await signJwt({
         _id: user._id,
         email: user.email,
         username: user.username,
       });
+      const refreshToken = await signJwt(
+        {
+          id: Date.now(),
+        },
+        3.154e10
+      );
 
       //Save token to the database
       const savedToken = new Token({
-        token,
+        accessToken,
       });
+      const refreshTokenObject = new Token({ refreshToken });
+      await refreshTokenObject.save();
       await savedToken.save();
+
       return res.json({
         message: "Login successful",
         success: true,
-        token,
+        accessToken,
+        refreshToken,
         user: {
           username: user.username,
           email: user.email,
