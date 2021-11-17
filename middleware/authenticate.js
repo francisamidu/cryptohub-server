@@ -10,7 +10,6 @@ const authenticate = async (req, res, next) => {
   try {
     const user = await verifyJwt(token);
     req.user = user;
-    console.log(user);
     next();
   } catch (error) {
     return res.status(500).json({

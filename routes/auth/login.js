@@ -58,9 +58,9 @@ router.post(
 
       //Save token to the database
       const savedToken = new Token({
-        accessToken,
+        token: accessToken,
       });
-      const refreshTokenObject = new Token({ refreshToken });
+      const refreshTokenObject = new Token({ token: refreshToken });
       await refreshTokenObject.save();
       await savedToken.save();
 
