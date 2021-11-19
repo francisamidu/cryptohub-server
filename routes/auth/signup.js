@@ -8,7 +8,7 @@ const User = require("../../db/models/User");
 const OTP = require("../../db/models/OTP");
 
 //Auth Utilities
-const hashPassword = require("../../utils/hashValue");
+const hashValue = require("../../utils/hashValue");
 
 //Signup/Register endpoint
 router.post(
@@ -45,21 +45,30 @@ router.post(
         return res.status(401).json(validationResults);
       }
 
+      //Query the database for user and send back response message
+      const user = await User.findOne({ username });
+      if (user) {
+        return res
+          .status(400)
+          .json({ message: "User already exists", success: false });
+      }
+
       //Generate OTP
-      const generatedOTP = OTPGenerator.generate(6, {
+      const tempOTP = OTPGenerator.generate(6, {
         digits: true,
         upperCase: false,
         specialChars: false,
         alphabets: false,
         specialChar: false,
       });
+      const generatedOTP = await hashValue(tempOTP);
       const otp = new OTP({
         otp: generatedOTP,
       });
       await otp.save();
 
       //has user password
-      const hashedPassword = await hashPassword(password);
+      const hashedPassword = await hashValue(password);
 
       //create User and save to the database
       const user = new User({
