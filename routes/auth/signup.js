@@ -1,13 +1,14 @@
 //Base Requirements
 const router = require("express").Router();
 const { check, validationResult } = require("express-validator");
+const OTPGenerator = require("otp-generator");
 
 //Database models
 const User = require("../../db/models/User");
-const Token = require("../../db/models/Token");
+const OTP = require("../../db/models/OTP");
 
 //Auth Utilities
-const hashPassword = require("../../utils/hashPassword");
+const hashPassword = require("../../utils/hashValue");
 
 //Signup/Register endpoint
 router.post(
@@ -43,6 +44,19 @@ router.post(
       if (validationResults.length) {
         return res.status(401).json(validationResults);
       }
+
+      //Generate OTP
+      const generatedOTP = OTPGenerator.generate(6, {
+        digits: true,
+        upperCase: false,
+        specialChars: false,
+        alphabets: false,
+        specialChar: false,
+      });
+      const otp = new OTP({
+        otp: generatedOTP,
+      });
+      await otp.save();
 
       //has user password
       const hashedPassword = await hashPassword(password);

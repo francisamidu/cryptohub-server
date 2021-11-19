@@ -34,6 +34,11 @@ router.post(
           .status(404)
           .json({ message: "No user found", success: false });
       }
+      if (!user.isVerified) {
+        return res
+          .status(403)
+          .json({ message: "Account required verification", success: false });
+      }
 
       //Compare password and send back response message
       const isPasswordMatching = comparePassword(password, user.password);
