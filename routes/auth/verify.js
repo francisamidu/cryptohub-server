@@ -11,17 +11,11 @@ router.post(
   "/",
   [
     check("email", "Please provide a valid email address").isEmail(),
-    check(
-      "username",
-      "A valid username should be at least be 3 characters long"
-    )
-      .isString()
-      .isLength({ min: 3 }),
     check("otp", "Please provide OTP").isLength({ min: 6, max: 6 }),
   ],
   async (req, res) => {
     try {
-      const { email, username, otp } = req.body;
+      const { email, otp } = req.body;
 
       //Validate credentials and send back response message
       const validationResults = validationResult(req).errors.map((result) => ({
@@ -32,7 +26,7 @@ router.post(
         return res.status(401).json(validationResults);
       }
       //Query the database for user and send back response message
-      const user = await User.findOne({ email, username });
+      const user = await User.findOne({ email });
       if (!user) {
         return res
           .status(404)
