@@ -71,19 +71,20 @@ router.post(
       const hashedPassword = await hashValue(password);
 
       //create User and save to the database
-      const user = new User({
+      const newUser = new User({
         email,
         password: hashedPassword,
         username,
       });
-      await user.save();
+      await newUser.save();
 
       return res.status(201).json({
         success: true,
+        otp: tempOTP,
         user: {
-          username: user._doc.username,
-          email: user._doc.email,
-          createdAt: user._doc.created_at,
+          username: newUser._doc.username,
+          email: newUser._doc.email,
+          createdAt: newUser._doc.created_at,
         },
       });
     } catch (error) {

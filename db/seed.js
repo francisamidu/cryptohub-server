@@ -1,20 +1,22 @@
 const User = require("./models/User");
 const mongoose = require("mongoose");
-
+const hashPassword = require("../utils/hashValue");
 // Creates a test account
 const seed = async () => {
   try {
     const isAlreadyCreated = await User.findOne({ username: "test" });
+    const password = await hashPassword("(Testaccount1)");
     if (!isAlreadyCreated) {
       const newUser = new User({
         username: "test",
         email: "test@test.com",
-        password: "(Testaccount1)",
+        password,
       });
       await newUser.save();
       console.log(`seeded test user account`);
       mongoose.disconnect();
     } else {
+      console.log(isAlreadyCreated);
       console.log("User account already exists");
       mongoose.disconnect();
     }
